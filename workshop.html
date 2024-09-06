@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<!--
+    Plain-Academic by Vasilios Mavroudis
+    Released under the Simplified BSD License/FreeBSD (2-clause) License.
+    https://github.com/mavroudisv/plain-academic
+-->
+
+<html lang="en">
+<head>
+  <title>PIRA2024 @ MSU & UNN  </title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <link href='https://fonts.googleapis.com/css?family=Oswald:700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<style>
+  body {
+    margin: 0;
+  }
+
+  main {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .slider-dimensions {
+    width: min(100vw, 720px);
+    aspect-ratio: 3 / 2;
+  }
+
+  .slider-container {
+    position: relative;
+    overflow: hidden;
+    background-color: lightgray;
+  }
+
+
+  .slider {
+    position: absolute;
+    display: flex;
+    transform: translateX(-0%);
+    transition: transform 1s;
+  }
+
+  .slider>div {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  .nav-container {
+    position: absolute;
+    padding: 0 20px 20px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-image: radial-gradient(transparent, rgba(0, 0, 0, .3));
+    opacity: 0;
+    transition: opacity .2s;
+  }
+
+  .nav-container:hover {
+    opacity: 1;
+  }
+
+  .index-container {
+    align-self: flex-end;
+    display: flex;
+    gap: 30px;
+  }
+
+  .index-container>button {
+    width: 20px;
+    height: 20px;
+    border: none;
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, .3);
+    transition: background-color .2s;
+    cursor: pointer;
+  }
+
+  .index-container>button:hover {
+    background-color: rgba(255, 255, 255, .7);
+  }
+
+  button[data-index-change] {
+    font-size: 40px;
+    color: white;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+
+  @media (max-width: 500px) {
+    .nav-container {
+      padding: 0 0 10px;
+    }
+
+    .index-container {
+      gap: 20px;
+    }
+  }
+</style>
+<body>
+
+
+  <!-- Navigation -->
+	<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+	  <div class="container">
+		<div class="navbar-header">
+      <a class="navbar-brand" href="#">
+        <img src="img/left-logo.png" alt="Left Logo" style="height: 80px;">
+      </a>
+		  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		  <ul class="nav navbar-nav">
+       
+        
+				  <li><a href="index.html"> <h4>About</h4></a></li>
+          <li><a href="project.html"> <h4>Research</h4></a></li>
+				  <li><a href="workshop.html"> <h4>Workshop</h4></a></li>
+				  <li><a href="#publications"> <h4>Competition</h4></a></li> 
+				  <li><a href="#"> <h4>Team</h4></a></li> 
+          <li><a href="#"> <h4>Grants</h4></a></li> 
+        
+		  </ul>
+		</div>
+   
+	  </div>
+	</nav>
+  
+    <!-- Page Content -->
+    <div class="container">
+      <div class="row">
+        <!-- Entries Column -->
+        <div class="col-md-8" style="height: 100vh;">
+          <div style="text-align:justify">   
+            <p><h2> <font color="green"> Workshop and Training on Developing Indigenous Robot-Solutions for Agricultural Production and Sustainability in Africa 2025 </font></h2></p>
+          </div>
+          <div class="slider-container slider-dimensions">
+            <div class="slider">
+              <div data-img-url="img/wkshop1.png" class="slider-dimensions"></div>
+              <div data-img-url="img/wkshop2.png" class="slider-dimensions"></div>
+              <div data-img-url="img/wkshop3.png" class="slider-dimensions"></div>
+              <div data-img-url="img/wkshop4.png" class="slider-dimensions"></div>
+              <div data-img-url="img/wkshop5.png" class="slider-dimensions"></div>
+              <div data-img-url="img/wkshop6.png" class="slider-dimensions"></div>
+            </div>
+            <div class="nav-container slider-dimensions" tabindex="0">
+              <button data-index-change="-1">&lt;</button>
+              <div class="index-container">
+                <button></button>
+                <button></button>
+                <button></button>
+                <button></button>
+                <button></button>
+                <button></button>
+              </div>
+              <button data-index-change="1">&gt;</button>
+            </div>
+          </div>
+          <script>
+          const imgs = document.querySelectorAll('[data-img-url]');
+          imgs.forEach((div) => {
+            div.style.backgroundImage = `url(./${div.getAttribute('data-img-url')})`;
+          });
+          const slider = document.querySelector('.slider');
+          const indexButtons = document.querySelectorAll('.index-container > button');
+          const arrowButtons = document.querySelectorAll('[data-index-change]');
+          let currIndex = 0;
+          function slide(nextIndex) {
+            if (nextIndex < 0) nextIndex = imgs.length - 1;
+            if (nextIndex >= imgs.length) nextIndex = 0;
+            indexButtons[currIndex].style.backgroundColor = '';
+            indexButtons[nextIndex].style.backgroundColor = 'white';
+            slider.style.transform = `translateX(-${(nextIndex / imgs.length) * 100}%)`
+            currIndex = nextIndex;
+          }
+          indexButtons[0].style.backgroundColor = 'white';
+          indexButtons.forEach((button, index) => {
+            button.addEventListener('click', () => {
+              slide(index); 
+            });
+          });
+          arrowButtons.forEach((button) => {
+            button.addEventListener('click', () => {
+              const indexChange = +button.getAttribute('data-index-change');
+              slide(currIndex + indexChange);
+            });
+          });
+          const navContainer = document.querySelector('.nav-container');
+          let id;
+          let isSliding = false;
+          function startAutoSlide() {
+            if (!isSliding) {
+              id = setInterval(() => slide(currIndex + 1), 5000);
+              isSliding = true;
+            }
+          };
+          function stopAutoSlide() {
+            clearInterval(id);
+            isSliding = false;
+          };
+          startAutoSlide();
+          navContainer.addEventListener('mouseover', () => stopAutoSlide());
+          navContainer.addEventListener('mouseout', () => startAutoSlide());
+          document.addEventListener('touchstart', (e) => {
+            if (e.target !== navContainer && !navContainer.contains(e.target))
+            startAutoSlide();
+          });
+          </script>
+          <div style="text-align:justify">
+            <p><h3> <font color="blue"> <u> Workshop Theme </u></font></h3> </p>
+            <p><h4>The workshop focuses on introducing participants to autonomous robot systems development and adoptation for addressing contemporary XXXXXXX  </h4></p>
+          </div>
+          <div style="text-align:justify">
+            <p><h3><font color="blue"> <u> Description and Objectives </u></font></h3> </p>
+            <p><h4>The workshop will explore the role of social robots and AI in supporting mental health in public places.Discussions will cover the application robots in agriculture. Topics such as XXX will be examined. The workshop aims to address the following specific XXX: </h4></p>
+          </div>
+          <div style="text-align:justify">
+            <p><h3><font color="blue"><u> Program </u></font></h3> </p>
+            <p><h4>
+              <ol>
+                <li><b>Opening Session (15 minutes)</b>
+                  <ul  style="list-style-type: square;">
+                    <li> Welcome and Introduction to IRSDA-2025 </li>
+                    <li> Overview of Workshop Objectives </li>
+                  </ul>
+                </li><br>
+                <li>
+                  <b>Invited Talks (each: 30 minutes, including Q&A)</b>
+                  <ul  style="list-style-type: square;">
+                    <li> Talk 1: Prof. XXX, Topic: TBD </li>
+                    <li> Talk 2: Dr. Julie XXX, Topic: TBD </li>
+                    <li> Talk 3: Prof. XXX, Topic: TBD </li>
+                  </ul>
+                </li><br>
+                <li>
+                  <b>Training session (around 3 hours)</b>
+                  <ul  style="list-style-type: square;">
+                    <li> Robot programing</li>
+                    <li> Tools </li>
+                    <li>Demonstration  </li>
+                  </ul>
+                </li><br>
+                <li>
+                  <b>Interactive Session [Organizers, Speakers, and Attendees] (60 minutes)</b>
+                  <ul  style="list-style-type: square;">
+                    <li> Panel Discussion</li>
+                  </ul>
+                </li><br>
+                <li>
+                  <b>Networking Opportunities: Onsite/Virtual Breakout Rooms (30 minutes)</b>
+                  <ul  style="list-style-type: square;">
+                    <li> Discussions and Demos</li>
+                  </ul>
+                </li><br>
+                <li>
+                  <b>Closing Session (20 minutes)</b>
+                  <ul  style="list-style-type: square;">
+                    <li>Recap, Key Insights, and Outcomes</li> 
+                  </ul>
+                </li><br>
+              </ol>
+            </h4></p>
+          </div>
+          <br>
+        </div> 
+        <!-- Contact Info on the Sidebar -->
+         <div class="col-md-4">
+          <div style="font-family: 'Oswald', sans-serif; font-size: 32px; color: green;"><b><h3>Speakers</h3></b></div>
+          <ul>
+            <li>
+              <h4>
+                <font color="blue"><p><b>Prof. Elizabeth Sklar</b></p> </font> 
+                <p><b>Talk title: <i>Collaborative Robotic Systems for Sustainable Food Production</i></b></p> 
+                <div class="text-wrapper2" style="margin-top:1%; text-align:justify;">
+                  <img class="float-image2" src="img/Speaker1.png" alt="Description of image">
+                  <p> Elizabeth Sklar, PhD, is Professor of Agri-Robotics and Research Director at the Lincoln Institute for Agri-food Technology (LIAT) at the University of Lincoln, UK. 
+                  She has held previous academic posts at King's College London, the City University of New York (US) and Columbia University (US). 
+                  Her research investigates the implementation of AI-based methods in the context of multi-robot teams, human-machine teaming, data-backed decision making and behaviour mining. 
+                  Since joining LIAT in 2019, she has been exploring the application of these methodologies within the agri-food pipeline through the development of intelligent agri-food systems that incorporate autonomous robots and multi-agent systems for collaborative farming and food production. 
+                  Prof Sklar's work has been funded by the UK research councils (EPSRC, ESRC and MRC/BBSRC), Innovate UK, US National Science Foundation and a US-UK Fulbright fellowship.
+                  She has published over 200 papers in refereed venues and edited two books.</p></h4>
+                </li> <br>
+            <li>
+              <h4>
+                <font color="blue"> 
+                <p><b>Prof. Takanori Fukao</b></p></font>
+                <p><b>Talk title: <i>Automated Agricultural Robot Systems: From Harvest to Transportation</i></b></p>   
+                <div class="text-wrapper1" style="margin-top:1%; text-align:justify;">
+                <img class="float-image1" src="img/Speaker2.png" alt="Description of image">               
+                <p>Takanori Fukao received the B.E., M.E., and Ph.D. from Kyoto University, Japan, in 1992, 1994, and 2001. From 1996 to 2004, he was an Assistant Professor at Kyoto University.
+                  From 2004 to 2015, he was an Associate Professor at Kobe University. From 2015 to 2020, he was a Professor at Ritsumeikan University. Since 2020, he has been a Professor at the University of Tokyo. 
+                  From 2001 to 2003, he was also a Visiting Scientist at Carnegie Mellon University. His main research interests include field robotics and automotive control. 
+                </p>
+              </h4>
+            </li> <br>
+
+            <li>
+              <h4>
+                <font color="blue"> 
+                <p><b>Prof. Maren Bennewitz</b></p> </font> 
+                <p><b>Talk title: <i>Active Perception for Fruit Mapping and Autonomous Harvesting</i></b></p>   
+                <div class="text-wrapper1" style="margin-top:1%; text-align:justify;">
+                <img class="float-image1" src="img/Speaker3.png" alt="Description of image">               
+                <p>Maren Bennewitz is professor for Computer Science at the University of Bonn, Germany, and head of the Humanoid Robots Lab. 
+                  She has published over 100 peer-reviewed scientific papers and regularly serves as editor or associate editor for top-tier robotics conferences as well as in the editorial board of top-tier robotics journals.
+                  She has been PI in several national and European projects and she is also on the Executive Board of the Cluster of Excellence PhenoRob -- Robotics and Phenotyping for Sustainable Crop Production. 
+                  One research focuses of her group is on coverage of crops with a robot's sensors to learn 3D models over time to monitor the plant growth and enable harvesting. 
+                </p>
+              </h4>
+
+            </li> <br>
+            <li>
+              <h4>
+                <font color="blue"> 
+                <p><b>Prof. George Kantor</b></p> </font>
+                <p><b>Talk title: <i>A path to dexterous manipulation in agriculture</i></b></p>  
+                <div class="text-wrapper2" style="margin-top:1%; text-align:justify;">
+                <img class="float-image2" src="img/Speaker4.png" alt="Description of image">               
+                <p>George Kantor is a Research Professor at Carnegie Mellon University's Robotics Institute. He has over 20 years of research experience in developing and deploying robotic technologies for real-world applications in military, agriculture, mining, and scientific exploration.
+                   His technical interests lie in position estimation and mapping for mobile robots, control of robotic systems with nontrivial dynamics, off-road autonomous driving, and deep learning for image analysis and sensor fusion "on the edge".
+                   In the agriculture domain, his group has developed mobile robots for in-field phenotyping, perception pipelines for creating dense 3D plant models, and reinforcement learning approaches for robotics manipulation in tree canopies. 
+                </p>
+              </h4>
+
+            </li>  
+          </ul>
+          <div style="font-family: 'Oswald', sans-serif; font-size: 32px; color: green;"><b><h3>Instructors</h3></b></div>
+              <ul>
+               <li>
+                  <h4>
+                  <font color="blue"> 
+                  <p><b>Prof. Daniel Morris </b></p> </font> 
+                  <div class="text-wrapper2" style="margin-top:1%; text-align:justify;">
+                  <img class="float-image2" src="img/instructor.png" alt="Description of image">               
+                  <p> Daniel Morris, is an Associate Professor with a co-appointment in the Departments of Biosystems and Agricultural Engineering and the Department of Electrical and Computer Engineering, Michigan State University.
+                    He obtained his PhD in Robotics from Carnegie Mellon University. He leads the 3D Vision Lab at MSU which focuses on leveraging machine learning and artificial intelligence for autonomous vehicles and smart agriculture.
+                    He created and teaches an Autonomous Vehicles class in which students learn Robot Operating System and to program robotic platforms. 
+                    He mentors SpARC (Spartan Autonomous Racing Club), a student group working on autonomous racing, and mentors PARC (Precision Agriculture Robotics Club), a student group that developed a robot to tend strawberry bushes and competed in a national competition. He has also been a judge as VEX high school robotics competitions. <br>
+                
+                  </p>
+                  </h4>
+                </li>
+              </ul> 
+            
+            </div>
+        </div>
+    </div>
+
+ <!-- Bottom Panel -->
+  <div class="bottom-panel">
+    <div class="container">
+      <p>© PIRA 2024 Inspiring and Growing Robotics in Africa: Towards Indigenous Robot-Solutions for Agricultural Production and Sustainability. All rights reserved.</p>
+      <p><a href="#privacy-policy">Contact</a> | <a href="#terms">Terms of Service</a></p>
+      <p><a href="#privacy-policy">Privacy Policy</a> | <a href="#terms">Terms of Service</a></p>
+    </div>
+  </div>
+
+
+
+</body>
+
+
+
+</html>

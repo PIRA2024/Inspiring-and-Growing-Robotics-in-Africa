@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Slider</title>
+</head>
+<style>
+  body {
+    margin: 0;
+  }
+
+  main {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .slider-dimensions {
+    width: min(100vw, 720px);
+    aspect-ratio: 3 / 2;
+  }
+
+  .slider-container {
+    position: relative;
+    overflow: hidden;
+    background-color: lightgray;
+  }
+
+
+  .slider {
+    position: absolute;
+    display: flex;
+    transform: translateX(-0%);
+    transition: transform 1s;
+  }
+
+  .slider>div {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  .nav-container {
+    position: absolute;
+    padding: 0 20px 20px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-image: radial-gradient(transparent, rgba(0, 0, 0, .3));
+    opacity: 0;
+    transition: opacity .2s;
+  }
+
+  .nav-container:hover {
+    opacity: 1;
+  }
+
+  .index-container {
+    align-self: flex-end;
+    display: flex;
+    gap: 30px;
+  }
+
+  .index-container>button {
+    width: 20px;
+    height: 20px;
+    border: none;
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, .3);
+    transition: background-color .2s;
+    cursor: pointer;
+  }
+
+  .index-container>button:hover {
+    background-color: rgba(255, 255, 255, .7);
+  }
+
+  button[data-index-change] {
+    font-size: 40px;
+    color: white;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+
+  @media (max-width: 500px) {
+    .nav-container {
+      padding: 0 0 10px;
+    }
+
+    .index-container {
+      gap: 20px;
+    }
+  }
+</style>
+
+<body>
+  <main>
+    <div class="slider-container slider-dimensions">
+      <div class="slider">
+        <div data-img-url="img/nw1.jpg" class="slider-dimensions"></div>
+        <div data-img-url="img/nw2.jpg" class="slider-dimensions"></div>
+        <div data-img-url="img/fig3.png" class="slider-dimensions"></div>
+      </div>
+      <div class="nav-container slider-dimensions" tabindex="0">
+        <button data-index-change="-1">&lt;</button>
+        <div class="index-container">
+          <button></button>
+          <button></button>
+          <button></button>
+        </div>
+        <button data-index-change="1">&gt;</button>
+      </div>
+    </div>
+  </main>
+  <script>
+
+    const imgs = document.querySelectorAll('[data-img-url]');
+
+    imgs.forEach((div) => {
+      div.style.backgroundImage = `url(./${div.getAttribute('data-img-url')})`;
+    });
+
+    const slider = document.querySelector('.slider');
+    const indexButtons = document.querySelectorAll('.index-container > button');
+    const arrowButtons = document.querySelectorAll('[data-index-change]');
+    let currIndex = 0;
+
+    function slide(nextIndex) {
+      if (nextIndex < 0) nextIndex = imgs.length - 1;
+      if (nextIndex >= imgs.length) nextIndex = 0;
+      indexButtons[currIndex].style.backgroundColor = '';
+      indexButtons[nextIndex].style.backgroundColor = 'white';
+      slider.style.transform = `translateX(-${(nextIndex / imgs.length) * 100}%)`
+      currIndex = nextIndex;
+    }
+
+    indexButtons[0].style.backgroundColor = 'white';
+
+    indexButtons.forEach((button, index) => {
+      button.addEventListener('click', () => {
+        slide(index);
+      });
+    });
+
+    arrowButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const indexChange = +button.getAttribute('data-index-change');
+        slide(currIndex + indexChange);
+      });
+    });
+
+    const navContainer = document.querySelector('.nav-container');
+    let id;
+    let isSliding = false;
+    function startAutoSlide() {
+      if (!isSliding) {
+        id = setInterval(() => slide(currIndex + 1), 5000);
+        isSliding = true;
+      }
+    };
+    function stopAutoSlide() {
+      clearInterval(id);
+      isSliding = false;
+    };
+    startAutoSlide();
+
+    navContainer.addEventListener('mouseover', () => stopAutoSlide());
+    navContainer.addEventListener('mouseout', () => startAutoSlide());
+
+    document.addEventListener('touchstart', (e) => {
+      if (e.target !== navContainer && !navContainer.contains(e.target))
+        startAutoSlide();
+    });
+
+  </script>
+</body>
+
+</html>
